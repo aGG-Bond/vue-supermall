@@ -1,4 +1,5 @@
-# hello-transition
+# vue-supermall
+项目使用vue全家桶进行开发的单页面程序，共分为四大模块组成:Home，category，market，profile
 
 ## Project setup
 ```
