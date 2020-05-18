@@ -11,7 +11,9 @@
 
     <!-- slider -->
     <slider>
-      <router-view class="center"></router-view>
+      <keep-alive exclude="Detail">
+        <router-view class="center"/>
+      </keep-alive>
     </slider>
 
     <tab-bar></tab-bar>

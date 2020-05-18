@@ -1,6 +1,6 @@
 <template>
   <div class="good-list-item" @click="handleClick">
-    <img v-lazy="goodsInfo.show.img" alt="photo">
+    <img v-lazy="showImage" alt="photo">
     <div class="goods-info">
       <p>{{goodsInfo.title}}</p>
       <span class="price">{{goodsInfo.price}}</span>
@@ -24,6 +24,11 @@ export default {
     handleClick() {
       const iid = this.goodsInfo.iid;
       this.$router.push(`/detail/${iid}`)
+    }
+  },
+  computed: {
+    showImage() {
+      return this.goodsInfo.show.img || this.goodsInfo.image
     }
   }
 }

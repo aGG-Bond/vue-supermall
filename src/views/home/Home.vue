@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <nav-bar>
+    <common-nav-bar>
       <template #middle>购物街</template>
-    </nav-bar>
+    </common-nav-bar>
     
       <tab-control class="fixed" 
         v-show="isShowTabControl"
@@ -14,11 +14,11 @@
       @loadMore='loadMore'
       @getPosition='getPosition'
       ref="scroll"
+      :pull-up-load='true'
       >
       <common-swiper :padding-bottom='"52%"' :banner= "banner"/>
       <home-recommend :recommend= "recommend"/>
       <home-Popular/>
-<!-- 1045-1939-6513-0689-8524-8411 -->
       <tab-control 
         :titles="Object.values(types)"
         @tabClick='tabClick'
@@ -30,11 +30,11 @@
 </template>
 
 <script>
-import {reqHomeMultidata,reqHomeGoods} from 'network/home'
+import {reqHomeMultidata,reqHomeGoods,ShopInfo} from 'network/home'
 import HomeRecommend from './base/recommend'
 import HomePopular from './base/popular'
 import TabControl from 'components/content/tabcontrol/TabControl'
-import GoodList from 'components/common/goodlist/GoodList'
+import GoodList from 'components/content/goodlist/GoodList'
 import BackTop from 'components/content/backtop/BackTop'
 
 export default {
@@ -128,16 +128,7 @@ export default {
   .swiper /deep/.swiper-pagination-bullet-active {
     background: lightskyblue
   }
-  .wrapper {
-    // height: calc(100vh - 44px);
-    height: calc(~"100vh - 93px"); //less会导致当成表达式计算，即需要增加波浪号以及一对引号
-    // position: fixed;
-    // top: 44px;
-    // bottom: 49px;
-    // left: 0;
-    // right: 0;
-    overflow: hidden;
-  }
+  
   .fixed {
     position: relative;
     z-index: 2;

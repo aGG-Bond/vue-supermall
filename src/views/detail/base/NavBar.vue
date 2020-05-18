@@ -1,5 +1,5 @@
 <template>
-  <nav-bar>
+  <common-nav-bar>
     <template #left>
       <img src="~assets/img/common/back.svg" alt="back.svg" @click="goBack">
     </template>
@@ -12,12 +12,12 @@
         </li>
       </ul>
     </template>
-  </nav-bar>
+  </common-nav-bar>
 </template>
 
 <script>
 export default {
-  name: 'DetailNavBar',
+  name: 'NavBar',
   data() {
     return {
       titles: ['商品','评论','参数','推荐'],
