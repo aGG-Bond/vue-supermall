@@ -5,6 +5,7 @@ const Home = ()=>import('views/home/Home')
 const Category = ()=>import('views/category/Category')
 const Market = ()=>import('views/market/Market')
 const Profile = ()=>import('views/profile/Profile')
+const Detail = ()=>import('views/detail/Detail')
 Vue.use(Router)
 
 const routes =[
@@ -31,6 +32,11 @@ const routes =[
     path: '/profile',
     component: Profile,
     meta: {index: 3}
+  },
+  {
+    path: '/detail/:iid',
+    component: Detail,
+    meta: {index: 4}
   }
 ]
 

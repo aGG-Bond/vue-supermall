@@ -1,5 +1,5 @@
 <template>
-  <swiper :options="swiperOptions" class="swiper">
+  <swiper :options="swiperOptions" class="swiper" :style="{paddingBottom}">
     <swiper-slide v-for="item in banner" :key="item.acm">
       <a :href="item.link">
         <img :src="item.image" alt="photo">
@@ -18,6 +18,9 @@
         default() {
           return []
         }
+      },
+      paddingBottom: {
+        type: String
       }
     },
     data() {
@@ -46,19 +49,22 @@
   }
 </script> 
 <style scoped lang='less'>
-/* >>> 或 /deep/ 样式穿透 
-  如果需要在当前项目中修改第三方库的样式 
-  >>> 不支持css预处理语法 less sass
-  /deep/ 支持css预处理语法 less sass */
-.swiper /deep/ .swiper-pagination-bullet-active {
-    background: lightskyblue
-  }
 .swiper {
+  position: relative;
+  overflow: hidden;
   height: 0;
-  padding-bottom: 52%;
-  text-align: center;
   img {
     width: 100%;
   }
 }
+/* >>> 或 /deep/ 样式穿透 
+  如果需要在当前项目中修改第三方库的样式 
+  >>> 不支持css预处理语法 less sass
+  /deep/ 支持css预处理语法 less sass */
+  .swiper /deep/ .swiper-container{
+    position: static;
+  }
+.swiper /deep/ .swiper-pagination-bullet-active {
+    background: lightskyblue
+  }
 </style>

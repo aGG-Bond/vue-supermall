@@ -3,23 +3,39 @@
     <nav-bar>
       <template #middle>购物街</template>
     </nav-bar>
-    <common-scroll>
-      <common-swiper :banner= "banner"/>
+    
+      <tab-control class="fixed" 
+        v-show="isShowTabControl"
+        :titles="Object.values(types)"
+        @tabClick='tabClick'
+        ref="tabControl1"/>
+
+    <common-scroll
+      @loadMore='loadMore'
+      @getPosition='getPosition'
+      ref="scroll"
+      >
+      <common-swiper :padding-bottom='"52%"' :banner= "banner"/>
       <home-recommend :recommend= "recommend"/>
       <home-Popular/>
 <!-- 1045-1939-6513-0689-8524-8411 -->
-      <tab-control :titles="['流行','新款','精选']"></tab-control>
-      <div v-for="item in 50" :key="item.id">{{item}}</div>
+      <tab-control 
+        :titles="Object.values(types)"
+        @tabClick='tabClick'
+        ref="tabControl2"/>
+      <good-list :goods= 'goods[currentType].list'/>
     </common-scroll>
+    <back-top @backTop='backTop' v-show="isBackTop"/>
   </div>
 </template>
 
 <script>
-import {reqHomeMultidata} from 'network/home'
+import {reqHomeMultidata,reqHomeGoods} from 'network/home'
 import HomeRecommend from './base/recommend'
 import HomePopular from './base/popular'
 import TabControl from 'components/content/tabcontrol/TabControl'
-import goodsList from 'components/common/goodslist/goodsList'
+import GoodList from 'components/common/goodlist/GoodList'
+import BackTop from 'components/content/backtop/BackTop'
 
 export default {
   name: 'Home',
@@ -27,37 +43,71 @@ export default {
     return {
       banner: [],   // 轮播图数据
       recommend: [],  // 推荐数据
+      currentType: 'pop',
+      isShowTabControl: false,
+      isBackTop: false,
+      types: {
+        pop: '流行',
+        new: '新款',
+        sell: '精选'
+      },
       goods: {      // 商品数据
         pop: {
           list: [],
-          page: 1
+          page: 0
         },
         new: {
           list: [],
-          page: 1
+          page: 0
         },
         sell: {
           list: [],
-          page: 1
+          page: 0
         }
       }
     }
   },
   created() {
     this.getHomeMultidata()
+    Object.keys(this.types).forEach(this.getHomeGoods)
   },
   methods: {
-    async getHomeMultidata(){
-      const result = await reqHomeMultidata()
-      this.banner = result.data.banner.list
+    async getHomeMultidata() {
+      const result = await reqHomeMultidata();
+      this.banner = result.data.banner.list;
       this.recommend = result.data.recommend.list
+    },
+    async getHomeGoods(type) {
+      const page = ++this.goods[type].page;
+      const result = await reqHomeGoods(type,page);
+      this.goods[type].list.push(...result.data.list)
+    },
+    tabClick(index) {
+      this.$refs.tabControl1.currentIndex = this.$refs.tabControl2.currentIndex = index;
+      this.currentType = Object.keys(this.types)[index]
+    },
+    loadMore() {
+      this.getHomeGoods(this.currentType);
+      // 当上拉加载数据完成，通过调用finsihPullUp来告知数据加载完成
+      this.$refs.scroll.finishPullUp()
+    },
+    getPosition(position) { // 吸顶效果：障眼法，解决better-scroll无法使用fixed，sticty
+      const positionY = -position.y;
+      const isShowTabControl = positionY >= this.$refs.tabControl2.$el.offsetTop
+      this.isShowTabControl = isShowTabControl;
+      // 一键返回顶部
+      this.isBackTop = positionY>=1000
+    },
+    backTop() { // 定位到顶部
+      this.$refs.scroll.scrollTo(0,0,1000)
     }
   },
   components: {
     HomeRecommend,
     HomePopular,
     TabControl,
-    goodsList
+    GoodList,
+    BackTop
   }
 }
 </script>
@@ -86,5 +136,10 @@ export default {
     // bottom: 49px;
     // left: 0;
     // right: 0;
+    overflow: hidden;
+  }
+  .fixed {
+    position: relative;
+    z-index: 2;
   }
 </style>

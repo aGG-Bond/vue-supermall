@@ -26,6 +26,7 @@ export default {
   methods:{
     handleClick(index){
       this.currentIndex = index
+      this.$emit('tabClick',index)
     }
   }
 }
@@ -35,8 +36,9 @@ export default {
   @import '~assets/css/varbile.less';
 
 .tab-control {
-  z-index: 5;
-  position: relative;
+  z-index: 1;
+  margin-bottom: 4px;
+  // position: relative;
   display: flex;
   text-align: center;
   line-height: 40px;
