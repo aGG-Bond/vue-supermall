@@ -28,7 +28,7 @@ export default {
   },
   computed: {
     showImage() {
-      return this.goodsInfo.show.img || this.goodsInfo.image
+      return this.goodsInfo.image || this.goodsInfo.show.img
     }
   }
 }

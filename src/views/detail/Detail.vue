@@ -29,7 +29,7 @@ import DetailShopInfo from './base/ShopInfo'
 import DetailImageInfo from './base/ImageInfo'
 import DetailParamsInfo from './base/ParamsInfo'
 import DetailCommentInfo from './base/CommentInfo'
-import GoodsList from 'components/content/goodslist/GoodsList'
+import GoodsList from 'components/content/goodlist/GoodList'
 
 export default {
   name: 'Detail',
@@ -52,7 +52,6 @@ export default {
     async getDetails() {
       const iid = this.$route.params.iid;
       const {result} = await reqDetails(iid);
-      console.log(result)
       const data = result.itemInfo.topImages.map(item=>this.banner.push({image:item}))
       // 商品信息
       this.goodsInfo = new GoodsInfo(result.itemInfo,result.columns,result.shopInfo.services)
