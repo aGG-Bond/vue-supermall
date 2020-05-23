@@ -25,7 +25,7 @@
         ref="tabControl2"/>
       <good-list :goods= 'goods[currentType].list'/>
     </common-scroll>
-    <back-top @backTop='backTop' v-show="isBackTop"/>
+    <back-top @backTop='backTop' v-show="isShowBackTop"/>
   </div>
 </template>
 
@@ -35,7 +35,8 @@ import HomeRecommend from './base/recommend'
 import HomePopular from './base/popular'
 import TabControl from 'components/content/tabcontrol/TabControl'
 import GoodList from 'components/content/goodlist/GoodList'
-import BackTop from 'components/content/backtop/BackTop'
+// import BackTop from 'components/content/backtop/BackTop'
+import {backTopMixin} from 'utils/mixins'
 
 export default {
   name: 'Home',
@@ -45,7 +46,7 @@ export default {
       recommend: [],  // 推荐数据
       currentType: 'pop',
       isShowTabControl: false,
-      isBackTop: false,
+      // isBackTop: false,
       types: {
         pop: '流行',
         new: '新款',
@@ -67,6 +68,7 @@ export default {
       }
     }
   },
+  mixins: [backTopMixin],
   created() {
     this.getHomeMultidata()
     Object.keys(this.types).forEach(this.getHomeGoods)
@@ -96,18 +98,18 @@ export default {
       const isShowTabControl = positionY >= this.$refs.tabControl2.$el.offsetTop
       this.isShowTabControl = isShowTabControl;
       // 一键返回顶部
-      this.isBackTop = positionY>=1000
+      this.isShowBackTop = positionY>=1000
     },
-    backTop() { // 定位到顶部
-      this.$refs.scroll.scrollTo(0,0,1000)
-    }
+    // backTop() { // 定位到顶部
+    //   this.$refs.scroll.scrollTo(0,0,1000)
+    // }
   },
   components: {
     HomeRecommend,
     HomePopular,
     TabControl,
     GoodList,
-    BackTop
+    // BackTop
   }
 }
 </script>

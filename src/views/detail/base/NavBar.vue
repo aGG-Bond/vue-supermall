@@ -5,9 +5,10 @@
     </template>
     <template #middle>
       <ul class="nav-bar-title">
-        <li :class="{active:currentIndex === index}"
+        <li 
           v-for="(item,index) in titles" :key="item.index" 
-          @click="currentIndex=index"
+          :class="{active:currentIndex === index}"
+          @click="handleClick(index)"
           >{{item}}
         </li>
       </ul>
@@ -20,13 +21,17 @@ export default {
   name: 'NavBar',
   data() {
     return {
-      titles: ['商品','评论','参数','推荐'],
+      titles: ['商品','参数','评论','推荐'],
       currentIndex: 0
     }
   },
   methods:{
     goBack() {  // 返回上一页
       this.$router.go(-1)
+    },
+    handleClick(index) {
+      this.currentIndex = index;
+      this.$emit('itemClick',index)
     }
   }
 }

@@ -14,6 +14,10 @@ export default {
     pullUpLoad:{
       type: Boolean,
       default: false
+    },
+    probeType:{
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -25,7 +29,8 @@ export default {
     // let scroll = new BScroll('.wrapper')
     this.scroll = new BScroll(this.$refs.wrapper,{
       click: true,  // 允许滚动区域点击
-      pullUpLoad: this.pullUpLoad  // 开启上拉加载功能
+      pullUpLoad: this.pullUpLoad,  // 开启上拉加载功能
+      probeType: this.probeType // 允许监听滚动事件
     })
     // 监听 滚动到滚动区域的最底部
     this.scroll.on('pullingUp',()=>{
