@@ -1,8 +1,8 @@
 <template>
   <div class="profile">
-    <nav-bar>
+    <common-nav-bar>
       <template #middle>个人</template>
-    </nav-bar>
+    </common-nav-bar>
   </div>
 </template>
 

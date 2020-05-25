@@ -1,8 +1,8 @@
 <template>
   <div class="market">
-    <nav-bar>
+    <common-nav-bar>
       <template #middle>购物车</template>
-    </nav-bar>
+    </common-nav-bar>
   </div>
 </template>
 

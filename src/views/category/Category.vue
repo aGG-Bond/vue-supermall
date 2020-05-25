@@ -1,8 +1,8 @@
 <template>
   <div class="category">
-    <nav-bar>
+    <common-nav-bar>
       <template #middle>分类</template>
-    </nav-bar>
+    </common-nav-bar>
   </div>
 </template>
 

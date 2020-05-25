@@ -30,14 +30,14 @@ export default {
 <style>
   .left-enter-active {
     transform: translateX(100%);
-    transition: 2s
+    transition: 1s
   }
   .left-enter-to {
     transform: translateX(0px)
   }
   .left-leave-active,.right-leave-active {
     transform: translateX(0px);
-    transition: 2s;
+    transition: 1s;
   }
   .left-leave-to {
     transform: translateX(-100%)
@@ -47,7 +47,7 @@ export default {
   }
   .right-enter-active {
     transform: translateX(-100%);
-    transition: 2s
+    transition: 1s
   }
   .right-enter-to {
     transform: translateX(0px)
