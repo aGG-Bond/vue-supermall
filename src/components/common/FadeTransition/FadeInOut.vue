@@ -15,14 +15,14 @@ export default {
 <style>
   .v-enter-active {
     opacity: 0;
-    transition: 1s;
+    /* transition: 1s; */
   }
   .v-enter-to {
     opacity: 1;
   }
   .v-leave-active {
     opacity: 1;
-    transition: 1s;
+    /* transition: 1s; */
   }
   .v-leave-to {
     opacity: 0;

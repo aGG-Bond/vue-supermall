@@ -1,6 +1,6 @@
 <template>
   <div class="detail">
-    <detail-nav-bar ref="navbar" @itemClick='itemClick' />
+    <detail-nav-bar ref="navbar" @itemClick='itemClick' style="background-color: white"/>
     <common-scroll ref="scroll" :probe-type='3' @getPosition="getPosition">
       <common-swiper :padding-bottom='"80%"' :banner="banner" />
       <detail-goods-info :goods-info='goodsInfo' />
@@ -10,6 +10,7 @@
       <detail-comment-info :comment-info='commentInfo' ref="comment" />
       <goods-list :goods='recommendInfo' ref="goods" />
     </common-scroll>
+    <detail-bottom-bar @addMarket='addMarket' />
     <back-top @backTop='backTop' v-show="isShowBackTop" />
   </div>
 </template>
@@ -32,6 +33,7 @@ import DetailImageInfo from './base/ImageInfo'
 import DetailParamsInfo from './base/ParamsInfo'
 import DetailCommentInfo from './base/CommentInfo'
 import GoodsList from 'components/content/goodlist/GoodList'
+import DetailBottomBar from './base/BottomBar'
 
 export default {
   name: 'Detail',
@@ -56,7 +58,8 @@ export default {
     DetailImageInfo,
     DetailParamsInfo,
     DetailCommentInfo,
-    GoodsList
+    GoodsList,
+    DetailBottomBar
   },
   mixins: [backTopMixin],
   created() {
@@ -65,8 +68,8 @@ export default {
   },
   methods: {
     async getDetails() {  // 获取数据
-      const iid = this.$route.params.iid;
-      const {result} = await reqDetails(iid);
+      this.iid = this.$route.params.iid;
+      const {result} = await reqDetails(this.iid);
       const data = result.itemInfo.topImages.map(item=>this.banner.push({image:item}))
       // 商品信息
       this.goodsInfo = new GoodsInfo(result.itemInfo,result.columns,result.shopInfo.services)
@@ -95,14 +98,23 @@ export default {
         8563 - 8826, index = 2
         8826 - 100000, index = 3
       */
-      if(positionY < this.offsetTopList[1]) {
-        this.$refs.navbar.currentIndex = 0
-      }else if(positionY >= this.offsetTopList[1] && positionY < this.offsetTopList[2]) {
-        this.$refs.navbar.currentIndex = 1
-      }else if(positionY >= this.offsetTopList[2] && positionY < this.offsetTopList[3]) {
-        this.$refs.navbar.currentIndex = 2
-      }else if(positionY >= this.offsetTopList[3] && positionY < this.offsetTopList[4]) {
-        this.$refs.navbar.currentIndex = 3
+      // if(positionY < this.offsetTopList[1]) {
+      //   this.$refs.navbar.currentIndex = 0
+      // }else if(positionY >= this.offsetTopList[1] && positionY < this.offsetTopList[2]) {
+      //   this.$refs.navbar.currentIndex = 1
+      // }else if(positionY >= this.offsetTopList[2] && positionY < this.offsetTopList[3]) {
+      //   this.$refs.navbar.currentIndex = 2
+      // }else if(positionY >= this.offsetTopList[3] && positionY < this.offsetTopList[4]) {
+      //   this.$refs.navbar.currentIndex = 3
+      // }
+      // 优化代码
+      for(let i in this.offsetTopList) {
+        if(i == this.offsetTopList.length-1)break;
+        let currentIndex = this.$refs.navbar.currentIndex
+        // console.log(typeof i ,i,i+1,+i+1,this.offsetTopList[i]) // i 为字符串，直接进行运算会变为字符串拼接，所以需要转换为数字
+        if(currentIndex !=i && positionY >= this.offsetTopList[i] && positionY <= this.offsetTopList[+i+1]) {
+          this.$refs.navbar.currentIndex = +i
+        }
       }
       this.isShowBackTop = positionY >= 1000
       // console.log(this.$refs.navbar.currentIndex)
@@ -120,11 +132,33 @@ export default {
       )
       // console.log(`第${count}图片加载完成`, this.offsetTopList)
     },
+    addMarket() {
+      const product = {}
+      product.image = this.banner[0];
+      product.title = this.goodsInfo.title;
+      product.desc = this.goodsInfo.desc;
+      product.price = this.goodsInfo.realPrice;
+      product.iid = this.iid;
+      // console.log(product)
+      this.$store.commit('addMarket',product)
+      this.$store.getters.count(this.iid)
+    }
   }
   
 }
 </script>
 
-<style>
-
+<style lang='less' scoped>
+  .center {
+    height: calc(~"100vh - 58px")
+  }
+  .wrapper {
+    // height: calc(100vh - 102px);
+    height: calc(~"100vh - 102px"); //less会导致当成表达式计算，即需要增加波浪号以及一对引号
+    // position: fixed;
+    // top: 44px;
+    // bottom: -58px;
+    // left: 0;
+    // right: 0;
+    }
 </style>

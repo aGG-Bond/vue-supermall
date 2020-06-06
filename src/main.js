@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import './assets/css/reset.css'
+import store from './store'
 
 import vueSwiper from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
@@ -15,5 +16,6 @@ Vue.use(VueLazyLoad,{
 })
 new Vue({
   render: h => h(App),
-  router
+  router,
+  store
 }).$mount('#app')

@@ -51,15 +51,6 @@ export default {
 }
 </script>
 
-<style lang='less' scoped>
-  .wrapper {
-    // height: calc(100vh - 44px);
-    height: calc(~"100vh - 93px"); //less会导致当成表达式计算，即需要增加波浪号以及一对引号
-    // position: fixed;
-    // top: 44px;
-    // bottom: 49px;
-    // left: 0;
-    // right: 0;
-    overflow: hidden;
-  }
+<style scoped>
+  
 </style>

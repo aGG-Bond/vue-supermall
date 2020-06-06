@@ -16,7 +16,7 @@
       </keep-alive>
     </slider>
 
-    <tab-bar></tab-bar>
+    <tab-bar v-show="!$route.path.includes('detail')"/>
   </div>
 </template>
 
@@ -25,10 +25,21 @@
 // import Slider from './components/common/sliderTransition/slider'
 export default {
   name: 'App',
-  components: {
-    // FadeInOut,
-    // Slider
-  }
+  // props: {
+  //   isShowTabBar: {
+  //     type: Boolean,
+  //     default: true
+  //   }
+  // },
+  // computed: {
+  //   tab() {
+  //     return this.$route.path != '/detail'
+  //   }
+  // },
+  // components: {
+  //   // FadeInOut,
+  //   // Slider
+  // }
 }
 </script>
 
@@ -36,5 +47,6 @@ export default {
   .center {
     position: absolute;
     width: 100%;
+    height: calc(~"100vh - 49px");
   }
 </style>
