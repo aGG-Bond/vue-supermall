@@ -2,7 +2,7 @@
   <div class="bottom-menu">
     <check-button class="select-all" :checked='isCheckAll' @click.native='btnClick'/>
     <span>全选</span>
-    <span class="total-price">合计:{{111}}</span>
+    <span class="total-price">合计:{{this.totalPrice}}</span>
     <span class="buy-product" >去计算({{this.selectedProductsLength}})</span>
   </div>
 </template>
@@ -16,7 +16,14 @@ export default {
     CheckButton
   },
   computed: {
-    ...mapGetters(['isCheckAll','selectedProductsLength'])
+    ...mapGetters(['isCheckAll','selectedProductsLength','selectMarket']),
+    totalPrice() {
+      let Price = 0;
+      this.selectMarket.forEach(item=>{
+        Price += item.price * item.count
+      })
+      return '￥' + Price
+    },
     // totalPrice() {
     //   return (
     //     "¥" +

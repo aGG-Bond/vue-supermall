@@ -48,8 +48,17 @@ const store = new Vuex.Store({
     isCheckAll(state) {   // 全选按钮
       return state.products.every(item=>item.checked)
     },
-    selectedProductsLength(state) {
+    selectedProductsLength(state) { //购物车中选中的商品的种类 
       return state.products.filter(item=>item.checked).length
+    },
+    selectMarket(state) {
+      let selectPrice = [];
+      state.products.forEach(item=>{
+        if(item.checked){
+          return selectPrice.push(item)
+        }
+      })
+      return selectPrice;
     }
   }
 })
