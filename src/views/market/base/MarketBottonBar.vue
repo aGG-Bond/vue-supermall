@@ -3,26 +3,28 @@
     <check-button class="select-all" :checked='isCheckAll' @click.native='btnClick'/>
     <span>全选</span>
     <span class="total-price">合计:{{this.totalPrice}}</span>
-    <span class="buy-product" >去计算({{this.selectedProductsLength}})</span>
+    <span class="buy-product" @click="calcClick">去计算({{this.selectedProductsLength}})</span>
   </div>
 </template>
 
 <script>
 import CheckButton from "./CheckButton";
 import {mapGetters,mapMutations} from 'vuex'
+// import Toast from 'components/content/toast/Toast'
 export default {
   name: "MarketBottomBar",
   components: {
-    CheckButton
+    CheckButton,
+    // Toast
   },
   computed: {
     ...mapGetters(['isCheckAll','selectedProductsLength','selectMarket']),
     totalPrice() {
       let Price = 0;
       this.selectMarket.forEach(item=>{
-        Price += item.price * item.count
+        Price += item.price * item.count 
       })
-      return '￥' + Price
+      return '￥' + Price.toFixed(2) //保留两位小数
     },
     // totalPrice() {
     //   return (
@@ -46,12 +48,16 @@ export default {
     btnClick() { // 如果全选按钮选中了 那所有的的按钮都应该被选中
       console.log('selectAll', this.isCheckAll)
       this.selectAll(!this.isCheckAll)
-    }
+    },
     //全选
     // checkAll() {
     //   // console.log(1111)
     //   this.$store.commit("checkAll", !this.isChecked);
     // },
+    calcClick() {
+      this.$toast.show(`总计是${this.totalPrice}元`,2000)
+      // this.$refs.toast.show(`总计是${this.totalPrice}元`,2000)
+    }
     // calcClick() {
     //   this.$toast.show(`总计是${this.totalPrice}元`, 2000);
     // }

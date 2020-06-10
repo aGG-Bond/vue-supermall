@@ -3,21 +3,29 @@
     <common-nav-bar>
       <template #middle>购物车({{$store.getters.productsLength}})</template>
     </common-nav-bar>
-    <common-scroll>
+    <common-scroll @getPosition='getPosition' :probe-type= "3" ref="scroll">
       <market-list/>
     </common-scroll>
     <market-botton-bar/>
+    <back-top @backTop='backTop' v-show="isShowBackTop" :bottom= "'100px'"/>
   </div>
 </template>
 
 <script>
 import MarketList from './base/MarketList'
 import MarketBottonBar from './base/MarketBottonBar.vue'
+import {backTopMixin} from 'utils/mixins'
 export default {
   name: 'Market',
   components: {
     MarketList,
     MarketBottonBar
+  },
+  mixins: [backTopMixin],
+  methods: {
+    getPosition(position) {
+      this.isShowBackTop = position.y < -500
+    }
   }
 }
 </script>

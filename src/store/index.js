@@ -36,7 +36,7 @@ const store = new Vuex.Store({
 
   },
   getters: {
-    count(state,getters) {
+    count(state) {
       return function (iid) {
         const product = state.products.find(item=>item.iid === iid)
         return product.count

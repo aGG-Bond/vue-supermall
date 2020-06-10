@@ -12,6 +12,7 @@
     </common-scroll>
     <detail-bottom-bar @addMarket='addMarket' />
     <back-top @backTop='backTop' v-show="isShowBackTop" />
+    <!-- <toast/> -->
   </div>
 </template>
 
@@ -25,6 +26,7 @@ import {
   reqRecommends
   } from 'network/detail'
 
+import {mapGetters} from 'vuex'
 import {backTopMixin} from 'utils/mixins'
 import DetailNavBar from './base/NavBar'
 import DetailGoodsInfo from './base/GoodsInfo'
@@ -34,6 +36,7 @@ import DetailParamsInfo from './base/ParamsInfo'
 import DetailCommentInfo from './base/CommentInfo'
 import GoodsList from 'components/content/goodlist/GoodList'
 import DetailBottomBar from './base/BottomBar'
+// import Toast from 'components/content/toast/Toast'
 
 export default {
   name: 'Detail',
@@ -49,7 +52,12 @@ export default {
       offsetTopList: [],
       // isShowBackTop:false, // 初始不显示返回顶部组件
       iid: '',
+      // isShow: false,  // 点击加入购物车后显示
+      // message: ''  // 点击加入购物车后显示的文字
     }
+  },
+  computed: {
+    ...mapGetters(['count'])
   },
   components: {
     DetailNavBar,
@@ -59,7 +67,8 @@ export default {
     DetailParamsInfo,
     DetailCommentInfo,
     GoodsList,
-    DetailBottomBar
+    DetailBottomBar,
+    // Toast
   },
   mixins: [backTopMixin],
   created() {
@@ -133,15 +142,26 @@ export default {
       // console.log(`第${count}图片加载完成`, this.offsetTopList)
     },
     addMarket() {
+      console.log('111')
       const product = {}
       product.image = this.banner[0];
       product.title = this.goodsInfo.title;
       product.desc = this.goodsInfo.desc;
       product.price = this.goodsInfo.realPrice;
       product.iid = this.iid;
-      // console.log(product)
       this.$store.commit('addMarket',product)
-      this.$store.getters.count(this.iid)
+      // console.log(this.$refs.toast)
+      // console.log(this)
+      this.$toast.show(`购物车中的数量为${this.count(this.iid)}`)
+      // this.isShow = true;
+      // this.message = `购物车中的数量为${this.count(this.iid)}`;
+      // console.log(this.count(this.iid))
+      // setTimeout(()=>{
+      //   this.isShow = false;
+      //   this.message = ''
+      // },1000)
+      // console.log(product)
+      // this.$store.getters.count(this.iid)
     }
   }
   
