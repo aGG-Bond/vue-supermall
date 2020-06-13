@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  @import '~assets/css/varbile.less';
+  @import '~assets/css/variable.less';
 
   .good-list {
     display: flex;

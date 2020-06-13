@@ -1,4 +1,4 @@
-import axios from 'axios'
+ import axios from 'axios'
 
 axios.defaults.baseURL = 'http://152.136.185.210:8000/api/n3'
 axios.interceptors.response.use(res=>res.data)

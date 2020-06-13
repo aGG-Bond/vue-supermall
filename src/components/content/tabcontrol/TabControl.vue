@@ -1,7 +1,8 @@
 <template>
   <ul class="tab-control">
-    <li v-for="item,index in titles" :key="item.id" @click="handleClick(index)" 
-        :class="{active: currentIndex === index}">
+    <li v-for="(item,index) in titles" :key="item.id"
+      @click="handleClick(index)" 
+      :class="{active: currentIndex === index}">
       <span>{{item}}</span>
     </li>
   </ul>
@@ -33,7 +34,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  @import '~assets/css/varbile.less';
+  @import '~assets/css/variable.less';
 
 .tab-control {
   z-index: 1;

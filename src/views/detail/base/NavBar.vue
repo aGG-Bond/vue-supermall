@@ -38,7 +38,7 @@ export default {
 </script>
 
 <style lang='less' scoped>
-  @import '~assets/css/varbile.less';
+  @import '~assets/css/variable.less';
 
   .nav-bar-title {
     display: flex;
